@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PintorIA — Inteligencia Artificial para Pintores</title>
+<meta name="description" content="La app con IA para pintores profesionales. Presupuestos profesionales en minutos, carta de colores NCS y RAL, PDF con tu logo. Prueba 15 días gratis.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --o: #e8650a;
+  --o2: #c4520a;
+  --negro: #0f0d0b;
+  --blanco: #faf9f7;
+  --gris: #888580;
+  --gris-claro: #f0ede8;
+  --card: #1a1714;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--negro);
+  color: var(--blanco);
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 16px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(15,13,11,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(232,101,10,0.15);
+}
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px; font-weight: 800;
+  color: var(--blanco);
+}
+.nav-logo span { color: var(--o); }
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a {
+  color: rgba(250,249,247,0.6);
+  text-decoration: none; font-size: 14px;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--blanco); }
+.nav-cta {
+  background: var(--o); color: #fff !important;
+  padding: 10px 22px; border-radius: 6px;
+  font-weight: 500; font-size: 14px;
+}
+.nav-cta:hover { background: var(--o2) !important; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center;
+  padding: 120px 40px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(232,101,10,0.12) 0%, transparent 70%);
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(232,101,10,0.15);
+  border: 1px solid rgba(232,101,10,0.3);
+  color: var(--o);
+  padding: 6px 16px; border-radius: 20px;
+  font-size: 13px; font-weight: 500;
+  margin-bottom: 32px;
+}
+
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(42px, 7vw, 88px);
+  font-weight: 800;
+  line-height: 1.0;
+  margin-bottom: 24px;
+  max-width: 900px;
+}
+.hero h1 .highlight { color: var(--o); }
+
+.hero p {
+  font-size: clamp(16px, 2vw, 20px);
+  color: rgba(250,249,247,0.65);
+  max-width: 580px;
+  line-height: 1.6;
+  margin-bottom: 48px;
+}
+
+.hero-btns {
+  display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+  margin-bottom: 64px;
+}
+
+.btn-primary {
+  background: var(--o);
+  color: #fff; text-decoration: none;
+  padding: 16px 36px; border-radius: 8px;
+  font-size: 16px; font-weight: 500;
+  transition: all 0.2s;
+  border: none; cursor: pointer;
+}
+.btn-primary:hover { background: var(--o2); transform: translateY(-2px); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--blanco); text-decoration: none;
+  padding: 16px 36px; border-radius: 8px;
+  font-size: 16px; font-weight: 500;
+  border: 1px solid rgba(250,249,247,0.2);
+  transition: all 0.2s;
+}
+.btn-secondary:hover { border-color: rgba(250,249,247,0.5); transform: translateY(-2px); }
+
+.hero-stats {
+  display: flex; gap: 48px; flex-wrap: wrap; justify-content: center;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 36px; font-weight: 800; color: var(--o);
+}
+.stat-label { font-size: 13px; color: var(--gris); margin-top: 4px; }
+
+/* PRESUPUESTO MOCKUP */
+.mockup-section {
+  padding: 80px 40px;
+  display: flex; justify-content: center;
+}
+.presup-card {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%; max-width: 520px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+}
+.presup-header {
+  background: var(--o);
+  padding: 20px 24px;
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.presup-empresa { color: #fff; }
+.presup-empresa-nom { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; }
+.presup-empresa-sub { font-size: 11px; opacity: 0.8; margin-top: 2px; }
+.presup-sello { text-align: right; }
+.presup-sello-txt { font-size: 9px; color: rgba(255,255,255,0.9); letter-spacing: 2px; font-weight: 700; }
+.presup-num { color: #fff; font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; margin-top: 2px; }
+.presup-fecha { font-size: 10px; color: rgba(255,255,255,0.7); }
+.presup-body { padding: 20px 24px; }
+.presup-cliente-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  background: #f5f4f2; border-radius: 8px;
+  padding: 12px 16px; margin-bottom: 16px; gap: 8px;
+}
+.presup-field label { font-size: 9px; font-weight: 700; text-transform: uppercase; color: #888; }
+.presup-field p { font-size: 13px; font-weight: 600; color: #1a1814; margin-top: 2px; }
+.presup-cond {
+  border: 1px solid var(--o);
+  border-radius: 8px; padding: 12px 14px; margin-bottom: 16px;
+  background: #fff8f3;
+}
+.presup-cond-tit { font-size: 9px; font-weight: 700; text-transform: uppercase; color: var(--o); margin-bottom: 5px; }
+.presup-cond p { font-size: 10px; color: #555; line-height: 1.5; }
+.presup-tabla { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+.presup-tabla thead tr { background: var(--o); }
+.presup-tabla thead td { color: #fff; font-size: 9px; font-weight: 700; text-transform: uppercase; padding: 6px 8px; }
+.presup-tabla tbody tr:nth-child(even) { background: #faf9f7; }
+.presup-tabla tbody td { font-size: 11px; color: #333; padding: 6px 8px; }
+.presup-tabla tbody td.nr { text-align: right; }
+.presup-tabla tbody td.bold { font-weight: 700; color: #1a1814; }
+.presup-total {
+  background: #1a1814; border-radius: 6px;
+  padding: 10px 12px; display: flex; justify-content: space-between; align-items: center;
+}
+.presup-total span:first-child { color: #fff; font-size: 13px; font-weight: 700; }
+.presup-total span:last-child { color: var(--o); font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; }
+
+/* SECCIONES */
+section { padding: 100px 40px; }
+
+.section-label {
+  font-size: 12px; font-weight: 500; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--o);
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 800; line-height: 1.1;
+  margin-bottom: 20px;
+}
+.section-sub {
+  font-size: 18px; color: rgba(250,249,247,0.6);
+  max-width: 560px; line-height: 1.6;
+  margin-bottom: 60px;
+}
+
+/* PROBLEMA */
+.problema { background: var(--negro); }
+.problema-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px; max-width: 1100px; margin: 0 auto;
+}
+.problema-card {
+  background: var(--card);
+  border: 1px solid rgba(250,249,247,0.06);
+  border-radius: 14px; padding: 28px;
+}
+.problema-icon { font-size: 28px; margin-bottom: 14px; }
+.problema-card h3 { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+.problema-card p { font-size: 14px; color: rgba(250,249,247,0.55); line-height: 1.6; }
+
+/* FUNCIONES */
+.funciones { background: #0d0b09; }
+.funciones-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px; max-width: 1100px; margin: 0 auto;
+}
+.funcion-card {
+  background: var(--card);
+  border: 1px solid rgba(232,101,10,0.15);
+  border-radius: 14px; padding: 32px;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.funcion-card:hover {
+  border-color: rgba(232,101,10,0.5);
+  transform: translateY(-4px);
+}
+.funcion-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 42px; font-weight: 800;
+  color: rgba(232,101,10,0.2);
+  margin-bottom: 12px;
+}
+.funcion-card h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px; font-weight: 700; margin-bottom: 12px;
+  color: var(--blanco);
+}
+.funcion-card p { font-size: 14px; color: rgba(250,249,247,0.55); line-height: 1.7; }
+.funcion-tag {
+  display: inline-block; margin-top: 16px;
+  background: rgba(232,101,10,0.15);
+  color: var(--o); font-size: 11px; font-weight: 600;
+  padding: 4px 12px; border-radius: 20px;
+}
+
+/* QUIEN */
+.quien {
+  background: var(--negro);
+  display: flex; align-items: center; justify-content: center;
+}
+.quien-inner {
+  max-width: 900px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.quien-avatar {
+  width: 100%; aspect-ratio: 1;
+  max-width: 320px;
+  background: var(--card);
+  border-radius: 20px;
+  border: 1px solid rgba(232,101,10,0.2);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 16px;
+  padding: 40px;
+}
+.quien-avatar-icon {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba(232,101,10,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px;
+}
+.quien-avatar-label { font-size: 13px; color: var(--gris); text-align: center; line-height: 1.5; }
+.quien-avatar-label strong { color: var(--o); display: block; font-size: 15px; margin-bottom: 4px; }
+.quien-texto { }
+.quien-texto h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 38px; font-weight: 800; margin-bottom: 24px; line-height: 1.1;
+}
+.quien-texto p {
+  font-size: 16px; color: rgba(250,249,247,0.65);
+  line-height: 1.8; margin-bottom: 20px;
+}
+.quien-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+.chip {
+  background: rgba(232,101,10,0.12);
+  border: 1px solid rgba(232,101,10,0.25);
+  color: var(--o); font-size: 12px; font-weight: 500;
+  padding: 6px 14px; border-radius: 20px;
+}
+
+/* PRECIOS */
+.precios { background: #0d0b09; text-align: center; }
+.precios-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px; max-width: 800px; margin: 0 auto;
+}
+.precio-card {
+  background: var(--card);
+  border: 1px solid rgba(250,249,247,0.06);
+  border-radius: 16px; padding: 36px 28px;
+  transition: transform 0.2s;
+}
+.precio-card:hover { transform: translateY(-4px); }
+.precio-card.destacado {
+  border-color: var(--o);
+  position: relative;
+}
+.precio-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--o); color: #fff;
+  font-size: 11px; font-weight: 700; padding: 4px 16px; border-radius: 20px;
+  white-space: nowrap;
+}
+.precio-tipo { font-size: 13px; color: var(--gris); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; }
+.precio-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 52px; font-weight: 800; color: var(--blanco);
+  line-height: 1;
+}
+.precio-num span { font-size: 18px; color: var(--gris); }
+.precio-periodo { font-size: 13px; color: var(--gris); margin: 8px 0 24px; }
+.precio-features { list-style: none; text-align: left; margin-bottom: 28px; }
+.precio-features li {
+  font-size: 14px; color: rgba(250,249,247,0.7);
+  padding: 6px 0; border-bottom: 1px solid rgba(250,249,247,0.05);
+  display: flex; align-items: center; gap: 10px;
+}
+.precio-features li::before { content: '✓'; color: var(--o); font-weight: 700; flex-shrink: 0; }
+.precio-cta {
+  display: block; width: 100%;
+  padding: 14px; border-radius: 8px;
+  font-size: 15px; font-weight: 500;
+  text-decoration: none; text-align: center;
+  transition: all 0.2s; cursor: pointer; border: none;
+}
+.precio-cta-main { background: var(--o); color: #fff; }
+.precio-cta-main:hover { background: var(--o2); }
+.precio-cta-sec { background: transparent; color: var(--blanco); border: 1px solid rgba(250,249,247,0.2); }
+.precio-cta-sec:hover { border-color: rgba(250,249,247,0.5); }
+.precio-gratis {
+  background: rgba(232,101,10,0.08);
+  border: 1px dashed rgba(232,101,10,0.3);
+  border-radius: 16px; padding: 28px; text-align: center;
+  max-width: 800px; margin: 32px auto 0;
+}
+.precio-gratis h3 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+.precio-gratis p { font-size: 15px; color: rgba(250,249,247,0.6); }
+.precio-gratis strong { color: var(--o); }
+
+/* CTA FINAL */
+.cta-final {
+  background: var(--o);
+  text-align: center; padding: 100px 40px;
+}
+.cta-final h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 800; color: #fff;
+  margin-bottom: 20px; line-height: 1.1;
+}
+.cta-final p { font-size: 18px; color: rgba(255,255,255,0.8); margin-bottom: 48px; }
+.btn-blanco {
+  background: #fff; color: var(--o);
+  text-decoration: none; padding: 18px 48px;
+  border-radius: 8px; font-size: 18px; font-weight: 700;
+  font-family: 'Syne', sans-serif;
+  display: inline-block; transition: all 0.2s;
+}
+.btn-blanco:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+.cta-wa {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: #25D366; color: #fff;
+  text-decoration: none; padding: 14px 32px;
+  border-radius: 8px; font-size: 15px; font-weight: 500;
+  margin-top: 20px; transition: all 0.2s;
+}
+.cta-wa:hover { background: #128C7E; transform: translateY(-2px); }
+
+/* FOOTER */
+footer {
+  background: #080604;
+  padding: 40px;
+  text-align: center;
+  border-top: 1px solid rgba(250,249,247,0.06);
+}
+footer p { font-size: 13px; color: var(--gris); line-height: 1.8; }
+footer a { color: var(--o); text-decoration: none; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  section { padding: 70px 20px; }
+  .quien-inner { grid-template-columns: 1fr; gap: 40px; }
+  .quien-avatar { max-width: 220px; margin: 0 auto; }
+  .hero { padding: 100px 20px 60px; }
+  .hero-stats { gap: 24px; }
+  .mockup-section { padding: 40px 20px; }
+}
+
+/* ANIMACIONES */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero > * { animation: fadeUp 0.8s ease forwards; }
+.hero > *:nth-child(1) { animation-delay: 0.1s; opacity: 0; }
+.hero > *:nth-child(2) { animation-delay: 0.2s; opacity: 0; }
+.hero > *:nth-child(3) { animation-delay: 0.3s; opacity: 0; }
+.hero > *:nth-child(4) { animation-delay: 0.4s; opacity: 0; }
+.hero > *:nth-child(5) { animation-delay: 0.5s; opacity: 0; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Pintor<span>IA</span></div>
+  <div class="nav-links">
+    <a href="#problema">El problema</a>
+    <a href="#funciones">Funciones</a>
+    <a href="#quien">Nosotros</a>
+    <a href="#precios">Precios</a>
+    <a href="https://wa.me/34643223301?text=Hola!%20Quiero%20probar%20PintorIA" class="nav-cta">Probar gratis</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-badge">🎨 Inteligencia Artificial para el sector de la pintura</div>
+  <h1>Presupuestos <span class="highlight">profesionales</span><br>en minutos</h1>
+  <p>La primera app con IA creada por y para pintores profesionales. Genera PDFs con tu logo, envía por WhatsApp y cierra más trabajos.</p>
+  <div class="hero-btns">
+    <a href="https://pintorapp.com/app" class="btn-primary">Probar 15 días gratis</a>
+    <a href="#funciones" class="btn-secondary">Ver cómo funciona</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">15</div><div class="stat-label">días gratis</div></div>
+    <div class="stat"><div class="stat-num">652</div><div class="stat-label">colores NCS · RAL · RGB</div></div>
+    <div class="stat"><div class="stat-num">5€</div><div class="stat-label">al mes después</div></div>
+    <div class="stat"><div class="stat-num">30+</div><div class="stat-label">años en el sector</div></div>
+  </div>
+</section>
+
+<!-- MOCKUP PRESUPUESTO -->
+<div class="mockup-section">
+  <div class="presup-card">
+    <div class="presup-header">
+      <div class="presup-empresa">
+        <div class="presup-empresa-nom">García Pinturas SL</div>
+        <div class="presup-empresa-sub">C/ Mayor 5 · Barcelona · Tel: 612 345 678</div>
+      </div>
+      <div class="presup-sello">
+        <div class="presup-sello-txt">P R E S U P U E S T O</div>
+        <div class="presup-num">P-2026-012</div>
+        <div class="presup-fecha">Fecha: 18/5/2026 · Válido: 30 días</div>
+      </div>
+    </div>
+    <div class="presup-body">
+      <div class="presup-cliente-grid">
+        <div class="presup-field"><label>Cliente</label><p>Familia Martínez Ruiz</p></div>
+        <div class="presup-field"><label>Descripción</label><p>Pintura vivienda completa</p></div>
+      </div>
+      <div class="presup-cond">
+        <div class="presup-cond-tit">Condiciones y alcance de los trabajos</div>
+        <p>Se procederá al tratamiento integral de paramentos horizontales y verticales siguiendo un riguroso protocolo: saneado, tratamiento de patologías, puente de unión y acabado de calidad con dos manos de pintura plástica.</p>
+      </div>
+      <table class="presup-tabla">
+        <thead><tr><td>Descripción</td><td>UD</td><td>Precio</td><td>Total</td></tr></thead>
+        <tbody>
+          <tr><td>Salón — Paredes (2 manos)</td><td class="nr">65 m²</td><td class="nr">7.50€</td><td class="nr bold">487.50€</td></tr>
+          <tr><td>Dormitorio principal</td><td class="nr">48 m²</td><td class="nr">7.50€</td><td class="nr bold">360.00€</td></tr>
+          <tr><td>Puertas lacadas (esmalte)</td><td class="nr">8 ud</td><td class="nr">65.00€</td><td class="nr bold">520.00€</td></tr>
+          <tr><td>Techos (2 manos)</td><td class="nr">55 m²</td><td class="nr">9.00€</td><td class="nr bold">495.00€</td></tr>
+        </tbody>
+      </table>
+      <div class="presup-total">
+        <span>TOTAL (IVA 21% incluido)</span>
+        <span>2.245 €</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EL PROBLEMA -->
+<section class="problema" id="problema">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-label">El problema</div>
+    <h2 class="section-title">¿Cuánto tiempo pierdes<br>en presupuestos?</h2>
+    <p class="section-sub">La mayoría de pintores siguen haciendo presupuestos a mano, en papel o en Word. Tiempo perdido que podrías dedicar a pintar.</p>
+    <div class="problema-grid">
+      <div class="problema-card">
+        <div class="problema-icon">📝</div>
+        <h3>Presupuestos a mano</h3>
+        <p>Horas calculando precios, buscando medidas y escribiendo conceptos que repites en cada obra.</p>
+      </div>
+      <div class="problema-card">
+        <div class="problema-icon">😤</div>
+        <h3>Imagen poco profesional</h3>
+        <p>Un presupuesto en papel o en Word no transmite la calidad de tu trabajo. El cliente no confía igual.</p>
+      </div>
+      <div class="problema-card">
+        <div class="problema-icon">🎨</div>
+        <h3>Colores por memoria</h3>
+        <p>Sin una carta de colores integrada, los malentendidos con el cliente sobre el color elegido son constantes.</p>
+      </div>
+      <div class="problema-card">
+        <div class="problema-icon">⏰</div>
+        <h3>Tardas más de lo necesario</h3>
+        <p>Cada presupuesto nuevo empieza desde cero. Sin plantillas, sin historial, sin automatización.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FUNCIONES -->
+<section class="funciones" id="funciones">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-label">La solución</div>
+    <h2 class="section-title">Todo lo que necesitas,<br>en tu bolsillo</h2>
+    <p class="section-sub">PintorIA combina la experiencia real del sector con inteligencia artificial para darte las herramientas que los pintores necesitan de verdad.</p>
+    <div class="funciones-grid">
+      <div class="funcion-card">
+        <div class="funcion-num">01</div>
+        <h3>Presupuestos en minutos</h3>
+        <p>Crea presupuestos completos con partidas, cantidades, precios y IVA. Usa plantillas de inicio rápido o añade tus propias partidas.</p>
+        <span class="funcion-tag">Inicio rápido</span>
+      </div>
+      <div class="funcion-card">
+        <div class="funcion-num">02</div>
+        <h3>PDF con tu logo y marca</h3>
+        <p>Genera un PDF profesional con el sello PRESUPUESTO, tus datos de empresa, logo, condiciones de trabajo y proceso de adjudicación.</p>
+        <span class="funcion-tag">PDF profesional</span>
+      </div>
+      <div class="funcion-card">
+        <div class="funcion-num">03</div>
+        <h3>652 colores integrados</h3>
+        <p>Carta completa NCS (194), RAL (213) y RGB (245). Especifica el código exacto del color en cada partida y evita malentendidos.</p>
+        <span class="funcion-tag">NCS · RAL · RGB</span>
+      </div>
+      <div class="funcion-card">
+        <div class="funcion-num">04</div>
+        <h3>WhatsApp directo al cliente</h3>
+        <p>Envía el presupuesto por WhatsApp con un toque. El mensaje se prepara automáticamente con los datos del presupuesto.</p>
+        <span class="funcion-tag">Envío directo</span>
+      </div>
+      <div class="funcion-card">
+        <div class="funcion-num">05</div>
+        <h3>Tarifa orientativa por zonas</h3>
+        <p>Precios de referencia del mercado para Cataluña, Madrid y Sevilla. Niveles económico, estándar y premium para orientarte.</p>
+        <span class="funcion-tag">Precios de mercado</span>
+      </div>
+      <div class="funcion-card">
+        <div class="funcion-num">06</div>
+        <h3>Textos profesionales</h3>
+        <p>Plantillas de texto para las condiciones del presupuesto. Protocolo de 4 fases, protección de estancias, proceso de adjudicación.</p>
+        <span class="funcion-tag">Diferenciación total</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIÉN HAY DETRÁS -->
+<section class="quien" id="quien">
+  <div class="quien-inner">
+    <div class="quien-avatar">
+      <div class="quien-avatar-icon">🎨</div>
+      <div class="quien-avatar-label">
+        <strong>Creador anónimo</strong>
+        Profesional del sector de la pintura con más de 30 años de experiencia
+      </div>
+    </div>
+    <div class="quien-texto">
+      <div class="section-label">Quién hay detrás</div>
+      <h2 class="section-title">Creado por alguien que vivió el problema</h2>
+      <p>PintorIA no la hizo un informático. La creó un profesional que tuvo su propia empresa de pintores y trabajó como jefe de ventas en una fábrica de pinturas.</p>
+      <p>Conoce los problemas reales del pintor autónomo porque los vivió en primera persona. Sabe cómo piensa el cliente, qué necesita el presupuesto para convencer y qué diferencia a un pintor profesional del resto.</p>
+      <p>La inteligencia artificial es la herramienta. La experiencia del sector es lo que hace que funcione de verdad.</p>
+      <div class="quien-chips">
+        <span class="chip">Empresa propia de pintura</span>
+        <span class="chip">Jefe de ventas fábrica pinturas</span>
+        <span class="chip">+30 años en el sector</span>
+        <span class="chip">IA aplicada al sector</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRECIOS -->
+<section class="precios" id="precios">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-label">Precios</div>
+    <h2 class="section-title">Menos de lo que cuesta<br>un café a la semana</h2>
+    <p class="section-sub" style="margin:0 auto 60px">Sin contratos, sin permanencia. Cancela cuando quieras.</p>
+    <div class="precios-grid">
+      <div class="precio-card">
+        <div class="precio-tipo">Mensual</div>
+        <div class="precio-num">5<span>€</span></div>
+        <div class="precio-periodo">al mes · sin permanencia</div>
+        <ul class="precio-features">
+          <li>Presupuestos ilimitados</li>
+          <li>PDF con tu logo</li>
+          <li>652 colores NCS · RAL · RGB</li>
+          <li>WhatsApp y email directo</li>
+          <li>Tarifa orientativa</li>
+          <li>Soporte incluido</li>
+        </ul>
+        <a href="https://wa.me/34643223301?text=Quiero%20la%20licencia%20mensual%20de%20PintorIA" class="precio-cta precio-cta-sec">Empezar mensual</a>
+      </div>
+      <div class="precio-card destacado">
+        <div class="precio-badge">⭐ Más popular · Ahorra 11€</div>
+        <div class="precio-tipo">Anual</div>
+        <div class="precio-num">49<span>€</span></div>
+        <div class="precio-periodo">al año · equivale a 4,08€/mes</div>
+        <ul class="precio-features">
+          <li>Todo lo del plan mensual</li>
+          <li>Ahorro de 11€ al año</li>
+          <li>Acceso prioritario a novedades</li>
+          <li>Soporte preferente</li>
+          <li>Plantillas exclusivas</li>
+          <li>Un año tranquilo sin preocupaciones</li>
+        </ul>
+        <a href="https://wa.me/34643223301?text=Quiero%20la%20licencia%20anual%20de%20PintorIA" class="precio-cta precio-cta-main">Empezar anual</a>
+      </div>
+    </div>
+    <div class="precio-gratis">
+      <h3>🆓 Primero pruébalo 15 días gratis</h3>
+      <p>Sin tarjeta, sin compromiso. Escríbenos y te mandamos la clave en minutos.<br><strong>+34 643 223 301 · pintorapp.com/app</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <h2>Tu estudio profesional<br>en el bolsillo</h2>
+  <p>Únete a los pintores que ya hacen presupuestos profesionales en minutos.<br>15 días gratis, sin tarjeta, sin letra pequeña.</p>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:16px">
+    <a href="https://pintorapp.com/app" class="btn-blanco">Empezar gratis ahora</a>
+    <a href="https://wa.me/34643223301?text=Hola!%20Quiero%20probar%20PintorIA%2015%20dias%20gratis" class="cta-wa">
+      📱 WhatsApp directo · +34 643 223 301
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    <strong style="color:var(--blanco)">PintorIA</strong> — Inteligencia Artificial para el sector de la pintura<br>
+    <a href="https://pintorapp.com/app">pintorapp.com</a> · 
+    <a href="https://wa.me/34643223301">+34 643 223 301</a> · 
+    <a href="mailto:info@obracontrolgps.net">info@obracontrolgps.net</a><br>
+    <span style="font-size:12px;margin-top:8px;display:block">© 2026 JM Prestige AI Solutions · Hecho en España con experiencia real del sector 🎨</span>
+  </p>
+</footer>
+
+</body>
+</html>
