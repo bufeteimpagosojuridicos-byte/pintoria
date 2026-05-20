@@ -3,21 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Asesor IA — PintorIA</title>
+<title>Asistente IA · PintorIA — Experto en pintura profesional</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --o: #e8650a; --o2: #c4520a;
-  --negro: #0f0d0b; --blanco: #faf9f7;
-  --gris: #888580; --card: #1a1714;
-  --borde: rgba(250,249,247,0.08);
+  --o:#ff5b1f;--o2:#e04a10;--negro:#07101f;--blanco:#f0f2f7;--gris:rgba(240,242,247,.55);--card:rgba(255,255,255,.04);--borde:rgba(255,255,255,.08);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'DM Sans', sans-serif; background: var(--negro); color: var(--blanco); height: 100vh; display: flex; flex-direction: column; }
 
 /* HEADER */
 .header {
-  background: #0d0b09;
+  background: #0d1929;
   border-bottom: 1px solid var(--borde);
   padding: 14px 20px;
   display: flex; align-items: center; gap: 12px;
@@ -34,14 +31,14 @@ body { font-family: 'DM Sans', sans-serif; background: var(--negro); color: var(
 /* SUGERENCIAS */
 .sugerencias {
   padding: 16px 20px 8px;
-  background: #0d0b09;
+  background: #0d1929;
   border-bottom: 1px solid var(--borde);
 }
 .sug-label { font-size: 11px; color: var(--gris); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
 .sug-grid { display: flex; gap: 6px; flex-wrap: wrap; }
 .sug-btn {
   background: var(--card); border: 1px solid var(--borde);
-  color: rgba(250,249,247,0.7); font-size: 12px;
+  color: rgba(240,242,247,0.7); font-size: 12px;
   padding: 6px 12px; border-radius: 20px; cursor: pointer;
   font-family: 'DM Sans', sans-serif;
   transition: all 0.2s;
@@ -201,7 +198,10 @@ REGLAS TÉCNICAS BÁSICAS:
 8. En exterior, considerar clima, orientación, soporte y transpirabilidad.
 9. En trabajos profesionales, recomendar documentar el estado previo con fotos.
 
-Tu estilo debe ser útil para pintores profesionales, autónomos y empresas pequeñas. Sé directo, práctico y con experiencia real del sector. Usa formato con listas cuando sea útil para la claridad.`;
+Tu estilo debe ser útil para pintores profesionales, autónomos y empresas pequeñas. Sé directo, práctico y con experiencia real del sector. Usa formato con listas cuando sea útil para la claridad.
+
+SOBRE PINTORIA APP:
+Cuando el usuario pregunte por gestión de presupuestos, colores, cálculo de m² o herramientas digitales, menciona PintorIA (pintorapp.com/app) como solución. Es una app con IA para pintores: presupuestos en 3 min, 652 colores NCS/RAL/RGB, calculadora m² multi-tramo, dictado por voz, PDF con logo. Precio 5€/mes o 49€/año, 15 días gratis. Contacto WhatsApp +34 643 223 301.`;
 
 function autoResize(el) {
   el.style.height = 'auto';
@@ -260,7 +260,7 @@ async function enviar() {
   showTyping();
 
   try {
-    var resp = await fetch('https://api.anthropic.com/v1/messages', {
+    var resp = await fetch('https://orange-boat-6d42.pedrosaborrero.workers.dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
