@@ -125,6 +125,7 @@ footer a{color:var(--o);text-decoration:none}
 footer strong{color:var(--bl)}
 /* MOVIL */
 @media(max-width:768px){
+  #asistente>div{grid-template-columns:1fr!important;gap:32px!important}
   nav{padding:16px 20px}
   .nav-links{display:none}
   .hero{padding:100px 20px 60px}
@@ -153,6 +154,7 @@ footer strong{color:var(--bl)}
     <a href="#funciones">Funciones</a>
     <a href="#colores">Colores</a>
     <a href="#precios">Precios</a>
+    <a href="/asistente.html" style="color:var(--gr);text-decoration:none;font-size:14px;transition:color .2s" onmouseover="this.style.color='var(--bl)'" onmouseout="this.style.color='var(--gr)'">🤖 Asistente IA</a>
     <a href="https://wa.me/34643223301?text=Hola!%20Quiero%20probar%20PintorIA" class="nav-cta">Probar gratis</a>
   </div>
 </nav>
@@ -268,6 +270,43 @@ footer strong{color:var(--bl)}
     <div class="ptrial">
       <h3>🆓 Primero pruébalo 15 días gratis</h3>
       <p>Sin tarjeta, sin compromiso. Escríbenos y te mandamos la clave en minutos.<br><strong>+34 643 223 301 · pintorapp.com/app</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ASISTENTE IA -->
+<section style="background:var(--azul2);padding:100px 40px" id="asistente">
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+    <div>
+      <div class="slabel">Asistente IA</div>
+      <h2 class="stitle">Tu experto<br>en pintura<br><em style="color:var(--o);font-style:normal">24/7</em></h2>
+      <p style="font-size:17px;color:var(--gr);line-height:1.7;margin-bottom:36px">
+        ¿Cuántos litros necesito? ¿Qué pintura para exterior con humedad? ¿Cómo presupuesto una fachada?<br><br>
+        Pregúntale a nuestro asistente IA especializado en pintura profesional. Respuestas técnicas reales, sin rodeos.
+      </p>
+      <a href="/asistente.html" class="btn-main" style="display:inline-flex;align-items:center;gap:10px">
+        🤖 Hablar con el asistente
+      </a>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--bd);border-radius:16px;overflow:hidden">
+      <div style="background:#0d1929;padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px">
+        <div style="width:8px;height:8px;border-radius:50%;background:#27c93f;animation:pulse 2s infinite"></div>
+        <span style="font-size:12px;color:var(--gr);font-family:'Space Mono',monospace">Asistente PintorIA</span>
+      </div>
+      <div style="padding:20px;display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <div style="width:30px;height:30px;border-radius:50%;background:rgba(255,91,31,.2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">🎨</div>
+          <div style="background:rgba(255,255,255,.04);border:1px solid var(--bd);border-radius:10px;border-bottom-left-radius:2px;padding:10px 14px;font-size:13px;color:var(--gr);line-height:1.5">Hola! Soy el asistente de PintorIA. Pregúntame lo que necesites sobre pintura profesional.</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;flex-direction:row-reverse">
+          <div style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;color:var(--gr)">Tú</div>
+          <div style="background:var(--o);border-radius:10px;border-bottom-right-radius:2px;padding:10px 14px;font-size:13px;color:#fff;line-height:1.5">¿Cuántos litros necesito para 80m² en 2 manos?</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <div style="width:30px;height:30px;border-radius:50%;background:rgba(255,91,31,.2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">🎨</div>
+          <div style="background:rgba(255,255,255,.04);border:1px solid var(--bd);border-radius:10px;border-bottom-left-radius:2px;padding:10px 14px;font-size:13px;color:var(--gr);line-height:1.5">Para 80m² a 2 manos necesitas unos <strong style="color:var(--bl)">14-16 litros</strong> con rendimiento estándar de 10m²/L. Te recomiendo comprar <strong style="color:var(--bl)">4 garrafas de 4L</strong> para tener margen.</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
