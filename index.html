@@ -287,5 +287,35 @@ footer strong{color:var(--bl)}
     <span style="font-size:12px;opacity:.5;margin-top:8px;display:block">© 2026 JM Prestige AI Solutions · Hecho en España con experiencia real del sector 🎨</span>
   </p>
 </footer>
+
+<!-- BANNER COOKIES -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:999;background:#0d1929;border-top:1px solid rgba(255,91,31,.3);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+  <p style="font-size:13px;color:rgba(240,242,247,.7);margin:0;flex:1;min-width:240px">
+    🍪 Usamos cookies propias para mejorar tu experiencia. Sin cookies de publicidad ni rastreo. 
+    <a href="#" style="color:#ff5b1f;text-decoration:none">Más info</a>
+  </p>
+  <div style="display:flex;gap:10px;flex-shrink:0">
+    <button onclick="rechazarCookies()" style="padding:9px 20px;border:1px solid rgba(255,255,255,.15);border-radius:6px;background:transparent;color:rgba(240,242,247,.6);font-size:13px;cursor:pointer">Rechazar</button>
+    <button onclick="aceptarCookies()" style="padding:9px 20px;background:#ff5b1f;border:none;border-radius:6px;color:#fff;font-size:13px;font-weight:700;cursor:pointer">Aceptar</button>
+  </div>
+</div>
+
+<script>
+function mostrarCookies(){
+  if(!localStorage.getItem('pintoria_cookies')){
+    document.getElementById('cookieBanner').style.display='flex';
+  }
+}
+function aceptarCookies(){
+  localStorage.setItem('pintoria_cookies','ok');
+  document.getElementById('cookieBanner').style.display='none';
+}
+function rechazarCookies(){
+  localStorage.setItem('pintoria_cookies','no');
+  document.getElementById('cookieBanner').style.display='none';
+}
+window.addEventListener('load', mostrarCookies);
+</script>
+
 </body>
 </html>
